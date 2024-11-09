@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql_db_docker
+    environment:
+      MYSQL_ROOT_PASSWORD: Sarthak@123
+      MYSQL_DATABASE: mydb
+    ports:
+      - "3308:3306"
+
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+
+  springboot:
+    build: .
+    container_name: grocery_booking_project
+    environment:
+      SERVER_PORT: 9090
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DB: mydb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: Sarthak@123
+    ports:
+      - "9091:9090"
+    depends_on:
+      - mysql
+volumes:
+  mysql_data:
